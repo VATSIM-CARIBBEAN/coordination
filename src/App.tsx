@@ -94,7 +94,7 @@ const LANE_FIXES: Partial<Record<LaneKey, string[]>> = {
   Curacao: ["Select", "SCAPA"],
   Maiquetia: ["Select", "ARMUR", "MILOK", "KIKER"],
   Piarco: ["Select", "ANADA", "GEECE", "ILURI", "MODUX", "GABAR", "ZPATA", "ELOPO", "LAMKN"],
-  "New York": ["Select", "DAWIN", "OBIKE", "SOCCO", "OPAUL", "KEEKA", "CHEDR", "HANCY", "FERNA", "KINCH"],
+  "New York": ["Select", "DAWIN", "OBIKE", "SOCCO", "OPAUL", "KEEKA", "CHEDR", "HANCY", "FERNA", "KINCH", "CRUPE", "BAROE"],
 };
 
 const FIX_COORDS: Record<string, { lat: number; lon: number }> = {
@@ -126,6 +126,8 @@ const FIX_COORDS: Record<string, { lat: number; lon: number }> = {
   HANCY: { lat: 22.036886, lon: -66.170619 },
   FERNA: { lat: 21.768772, lon: -67.021481 },
   KINCH: { lat: 21.621478, lon: -67.197817 },
+  CRUPE: { lat: 22.043089, lon: -66.061208 },
+  BAROE: { lat: 22.059194, lon: -65.793025 },
 };
 
 // Dev: override with VITE_SOCKET_URL, default http://localhost:3000
