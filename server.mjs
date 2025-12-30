@@ -118,7 +118,7 @@ function saveAccessToDisk() {
 // Load access/admin on server start
 loadAccessFromDisk();
 
-const VATSIM_BASE = 'https://auth-dev.vatsim.net';
+const VATSIM_BASE = 'https://auth.vatsim.net';
 const {
   VATSIM_CLIENT_ID,
   VATSIM_CLIENT_SECRET,
