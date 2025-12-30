@@ -52,8 +52,15 @@ const sessions = new Map(); // sid -> { user, createdAt }
 const ACCESS_CIDS = new Set(); // strings
 
 // Admin list: who can edit ACCESS_CIDS and admins via API
-// 👉 CHANGE "YOURCID_HERE" TO YOUR REAL VATSIM CID (used if no access.json yet)
-const ADMIN_CIDS = new Set(['10000005']);
+// Defaults from environment variables (comma-separated CIDs)
+const DEFAULT_ADMIN_CIDS = process.env.ADMIN_CIDS
+  ? process.env.ADMIN_CIDS.split(',').map((c) => c.trim()).filter(Boolean)
+  : [];
+const DEFAULT_ALLOWED_CIDS = process.env.ALLOWED_CIDS
+  ? process.env.ALLOWED_CIDS.split(',').map((c) => c.trim()).filter(Boolean)
+  : [];
+
+const ADMIN_CIDS = new Set(DEFAULT_ADMIN_CIDS);
 
 // File used to persist access/admin roles
 const ACCESS_FILE = path.join(__dirname, 'access.json');
@@ -61,7 +68,15 @@ const ACCESS_FILE = path.join(__dirname, 'access.json');
 function loadAccessFromDisk() {
   try {
     if (!fs.existsSync(ACCESS_FILE)) {
-      console.log('ℹ️ No access.json found, using in-memory defaults.');
+      console.log('ℹ️ No access.json found, using environment defaults.');
+      // Initialize from environment variables if no access.json exists
+      if (DEFAULT_ALLOWED_CIDS.length > 0) {
+        DEFAULT_ALLOWED_CIDS.forEach((cid) => ACCESS_CIDS.add(cid));
+        console.log(`   Loaded ${DEFAULT_ALLOWED_CIDS.length} allowed CIDs from ALLOWED_CIDS env var.`);
+      }
+      if (DEFAULT_ADMIN_CIDS.length > 0) {
+        console.log(`   Loaded ${DEFAULT_ADMIN_CIDS.length} admin CIDs from ADMIN_CIDS env var.`);
+      }
       return;
     }
     const raw = fs.readFileSync(ACCESS_FILE, 'utf8');
